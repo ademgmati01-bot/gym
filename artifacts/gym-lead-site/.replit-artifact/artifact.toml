@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Gym Lead Generation Website"
+description = "A high-converting gym landing page that turns local visitors into free-trial leads through bold fitness messaging, social proof, class discovery, and a working lead capture form."
+version = "1.0.0"
+id = "artifacts/gym-lead-site"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19445
+
+[services.development]
+run = "pnpm --filter @workspace/gym-lead-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gym-lead-site", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gym-lead-site/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19445"
+BASE_PATH = "/"
